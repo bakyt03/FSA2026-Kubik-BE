@@ -101,7 +101,7 @@ Naša firma potrebuje systém na správu a sledovanie odohraných zápasov. Do s
   - V kroku 6: Ak je hráč vybraný v oboch tímoch, systém ho z druhého výberu automaticky odstráni a upozorní používateľa.
 - **Alternatívny tok C - nedostatok hráčov:**
   - Ak v systéme nie je dostatok hráčov, formulár zobrazí upozornenie a odkaz na UC1.
-- **Následok:** Zápas je uložený, štatistiky všetkých 10 hráčov sú aktualizované.
+- **Následok:** Zápas je uložený , štatistiky všetkých 10 hráčov sú aktualizované.
 
 ---
 
