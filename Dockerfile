@@ -1,4 +1,4 @@
-FROM maven:3.9.9-eclipse-temurin-25 as builder
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /application
 
@@ -12,7 +12,7 @@ COPY application application
 RUN mvn package
 RUN mkdir build && cd build && java -Djarmode=layertools -jar ../application/springboot/target/*.jar extract
 
-FROM eclipse-temurin:25-jre-alpine
+FROM eclipse-temurin:21.0.1_12-jdk-alpine
 WORKDIR /application
 
 COPY --from=builder application/build/dependencies/ ./
