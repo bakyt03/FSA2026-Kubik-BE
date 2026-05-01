@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 variables:
   IMAGE_NAME: "fsa-backend"
   DOCKER_DRIVER: overlay2
@@ -21,5 +22,23 @@ build_image:
     - docker build -t "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION" -t "$ACR_REGISTRY/$IMAGE_NAME:latest" .
     - docker push "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
     - docker push "$ACR_REGISTRY/$IMAGE_NAME:latest"
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  tags:
+    - fsa-kubik
+  image: alpine/k8s:1.32.3
+  before_script:
+    - mkdir -p ~/.kube
+    - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
+  script:
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.fullstackacademy.sk/fsa-kubik/fsa2026-kubik-infra.git infra
+    - kubectl apply -f infra/kubernetes/workload/03-app-backend/
+    - kubectl rollout restart deployment/fsa-be -n app
+    - kubectl rollout status deployment/fsa-be -n app
+  needs:
+    - build_image
   only:
     - main
