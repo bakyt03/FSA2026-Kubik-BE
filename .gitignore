@@ -35,7 +35,15 @@ build/
 ### Mac ###
 .DS_Store
 
+### Logs ###
+*.log
+
 ### API test tooling ###
 tests/node_modules/
 tests/playwright-report/
 tests/test-results/
+
+
+### Other ###
+/.keycloak/
+/.scripts/
