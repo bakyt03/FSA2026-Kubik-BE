@@ -22,4 +22,4 @@ build_image:
     - docker push "$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_VERSION"
     - docker push "$DOCKER_REPOSITORY/$IMAGE_NAME:latest"
   only:
-    - master
+    - main
