@@ -10,16 +10,16 @@ build_image:
   stage: build
   tags:
     - fsa-kubik
-  image: docker:dind
+  image: docker:latest
   services:
-    - docker:latest
+    - docker:dind
   before_script:
     - until docker info &>/dev/null ; do sleep 2 && echo "Testujem pripojenie na Docker deamon (dind)" ; done
     - export IMAGE_VERSION="${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
   script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$CONTAINER_REGISTRY"
-    - docker build -t "$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_VERSION" -t "$DOCKER_REPOSITORY/$IMAGE_NAME:latest" .
-    - docker push "$DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_VERSION"
-    - docker push "$DOCKER_REPOSITORY/$IMAGE_NAME:latest"
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "https://$ACR_REGISTRY"
+    - docker build -t "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION" -t "$ACR_REGISTRY/$IMAGE_NAME:latest" .
+    - docker push "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+    - docker push "$ACR_REGISTRY/$IMAGE_NAME:latest"
   only:
     - main
