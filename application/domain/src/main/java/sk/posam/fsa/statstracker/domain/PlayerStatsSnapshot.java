@@ -10,6 +10,8 @@ public class PlayerStatsSnapshot {
     private double avgHltvRating;
     private double avgAdr;
     private double avgKdRatio;
+    private double avgKills;
+    private double avgDeaths;
     private int matchesPlayed;
 
     public long getPlayerId() {
@@ -50,6 +52,22 @@ public class PlayerStatsSnapshot {
 
     public void setMatchesPlayed(int matchesPlayed) {
         this.matchesPlayed = matchesPlayed;
+    }
+
+    public double getAvgKills() {
+        return avgKills;
+    }
+
+    public void setAvgKills(double avgKills) {
+        this.avgKills = avgKills;
+    }
+
+    public double getAvgDeaths() {
+        return avgDeaths;
+    }
+
+    public void setAvgDeaths(double avgDeaths) {
+        this.avgDeaths = avgDeaths;
     }
 
     /**

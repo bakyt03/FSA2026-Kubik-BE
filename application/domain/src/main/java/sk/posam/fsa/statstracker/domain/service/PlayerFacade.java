@@ -1,6 +1,7 @@
 package sk.posam.fsa.statstracker.domain.service;
 
 import sk.posam.fsa.statstracker.domain.Player;
+import sk.posam.fsa.statstracker.domain.PlayerWithStats;
 import sk.posam.fsa.statstracker.domain.StatsTrackerException;
 
 import java.util.List;
@@ -23,4 +24,9 @@ public interface PlayerFacade {
      * Vráti všetkých hráčov v systéme.
      */
     List<Player> findAll();
+
+    /**
+     * Vráti všetkých hráčov spolu s ich agregovanými štatistikami.
+     */
+    List<PlayerWithStats> findAllWithStats();
 }

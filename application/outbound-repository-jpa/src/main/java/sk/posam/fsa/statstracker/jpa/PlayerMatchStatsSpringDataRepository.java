@@ -13,7 +13,8 @@ public interface PlayerMatchStatsSpringDataRepository extends JpaRepository<Play
      * Agreguje priemerné štatistiky pre zoznam hráčov (všetky zápasy).
      */
     @Query("SELECT s.playerId, AVG(s.hltvRating), AVG(s.adr), " +
-            "AVG(CASE WHEN s.deaths = 0 THEN s.kills ELSE (s.kills * 1.0 / s.deaths) END), COUNT(s) " +
+            "AVG(CASE WHEN s.deaths = 0 THEN s.kills ELSE (s.kills * 1.0 / s.deaths) END), COUNT(s), " +
+            "AVG(s.kills), AVG(s.deaths) " +
             "FROM PlayerMatchStats s WHERE s.playerId IN :playerIds GROUP BY s.playerId")
     List<Object[]> findAggregatedStatsForPlayers(@Param("playerIds") List<Long> playerIds);
 

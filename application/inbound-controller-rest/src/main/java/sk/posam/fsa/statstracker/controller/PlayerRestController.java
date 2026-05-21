@@ -26,10 +26,9 @@ public class PlayerRestController implements PlayersApi {
     @Override
     public ResponseEntity<List<PlayerSummaryDto>> listPlayers() {
         return ResponseEntity.ok(
-                playerFacade.findAll().stream()
+                playerFacade.findAllWithStats().stream()
                         .map(playerMapper::toDto)
-                        .toList()
-        );
+                        .toList());
     }
 
     @Override

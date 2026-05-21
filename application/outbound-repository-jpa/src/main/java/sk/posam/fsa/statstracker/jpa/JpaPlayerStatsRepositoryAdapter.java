@@ -32,6 +32,8 @@ public class JpaPlayerStatsRepositoryAdapter implements PlayerStatsRepository {
             snap.setAvgAdr((Double) row[2]);
             snap.setAvgKdRatio((Double) row[3]);
             snap.setMatchesPlayed(((Long) row[4]).intValue());
+            snap.setAvgKills((Double) row[5]);
+            snap.setAvgDeaths((Double) row[6]);
             resultMap.put(snap.getPlayerId(), snap);
         }
 
@@ -70,6 +72,8 @@ public class JpaPlayerStatsRepositoryAdapter implements PlayerStatsRepository {
                 snap.setAvgKdRatio(recent.stream()
                         .mapToDouble(s -> s.getDeaths() == 0 ? s.getKills() : (double) s.getKills() / s.getDeaths())
                         .average().orElse(0.0));
+                snap.setAvgKills(recent.stream().mapToDouble(PlayerMatchStats::getKills).average().orElse(0.0));
+                snap.setAvgDeaths(recent.stream().mapToDouble(PlayerMatchStats::getDeaths).average().orElse(0.0));
             }
 
             result.add(snap);
@@ -78,5 +82,8 @@ public class JpaPlayerStatsRepositoryAdapter implements PlayerStatsRepository {
         return result;
     }
 
-
+    @Override
+    public void create(PlayerMatchStats stats) {
+        statsRepository.save(stats);
+    }
 }
