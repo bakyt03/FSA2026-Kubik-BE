@@ -1,0 +1,33 @@
+package sk.posam.fsa.statstracker.jpa;
+
+import org.springframework.stereotype.Repository;
+import sk.posam.fsa.statstracker.domain.Match;
+import sk.posam.fsa.statstracker.domain.MatchRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public class JpaMatchRepositoryAdapter implements MatchRepository {
+
+    private final MatchSpringDataRepository matchSpringDataRepository;
+
+    public JpaMatchRepositoryAdapter(MatchSpringDataRepository matchSpringDataRepository) {
+        this.matchSpringDataRepository = matchSpringDataRepository;
+    }
+
+    @Override
+    public Optional<Match> get(long id) {
+        return matchSpringDataRepository.findById(id);
+    }
+
+    @Override
+    public List<Match> getAll() {
+        return matchSpringDataRepository.findAllByOrderByPlayedAtDesc();
+    }
+
+    @Override
+    public Match create(Match match) {
+        return matchSpringDataRepository.save(match);
+    }
+}

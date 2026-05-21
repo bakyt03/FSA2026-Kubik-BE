@@ -9,6 +9,9 @@ public class PlayerMatchStats {
     private double adr;
     private double hsPercentage;
     private double hltvRating;
+    private Long matchId;
+    private String team;
+    private int damage;
 
     public Long getId() {
         return id;
@@ -72,5 +75,29 @@ public class PlayerMatchStats {
 
     public void setHltvRating(double hltvRating) {
         this.hltvRating = hltvRating;
+    }
+
+    public Long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

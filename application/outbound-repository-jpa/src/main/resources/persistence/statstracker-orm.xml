@@ -53,6 +53,41 @@
             <basic name="hltvRating">
                 <column name="hltv_rating" nullable="false"/>
             </basic>
+            <basic name="matchId">
+                <column name="match_id" nullable="true"/>
+            </basic>
+            <basic name="team">
+                <column name="team" nullable="true"/>
+            </basic>
+            <basic name="damage">
+                <column name="damage" nullable="true"/>
+            </basic>
+        </attributes>
+    </entity>
+
+    <!-- Match Entity -->
+    <entity class="sk.posam.fsa.statstracker.domain.Match" access="FIELD">
+        <table name="match"/>
+        <attributes>
+            <id name="id">
+                <column name="match_id"/>
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="map">
+                <column name="map" nullable="false"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="playedAt">
+                <column name="played_at" nullable="false"/>
+            </basic>
+            <basic name="team1Score">
+                <column name="team1_score" nullable="false"/>
+            </basic>
+            <basic name="team2Score">
+                <column name="team2_score" nullable="false"/>
+            </basic>
+            <transient name="winningTeam"/>
+            <transient name="teams"/>
         </attributes>
     </entity>
 

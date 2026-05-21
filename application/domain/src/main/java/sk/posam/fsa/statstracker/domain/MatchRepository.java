@@ -8,5 +8,5 @@ public interface MatchRepository {
 
     List<Match> getAll();
 
-    void create(Match match);
+    Match create(Match match);
 }

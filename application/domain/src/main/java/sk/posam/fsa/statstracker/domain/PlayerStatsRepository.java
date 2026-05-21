@@ -21,4 +21,6 @@ public interface PlayerStatsRepository {
      * posledných {@code recentMatchesLimit} zápasov každého hráča.
      */
     List<PlayerStatsSnapshot> getForPlayers(List<Long> playerIds, int recentMatchesLimit);
+
+    void create(PlayerMatchStats stats);
 }

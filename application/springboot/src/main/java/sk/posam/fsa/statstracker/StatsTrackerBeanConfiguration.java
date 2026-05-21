@@ -2,9 +2,12 @@ package sk.posam.fsa.statstracker;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import sk.posam.fsa.statstracker.domain.MatchRepository;
 import sk.posam.fsa.statstracker.domain.PlayerRepository;
 import sk.posam.fsa.statstracker.domain.PlayerStatsRepository;
 import sk.posam.fsa.statstracker.domain.TeamBalancer;
+import sk.posam.fsa.statstracker.domain.service.MatchFacade;
+import sk.posam.fsa.statstracker.domain.service.MatchService;
 import sk.posam.fsa.statstracker.domain.service.PlayerFacade;
 import sk.posam.fsa.statstracker.domain.service.PlayerService;
 import sk.posam.fsa.statstracker.domain.service.TeamSuggestionFacade;
@@ -19,13 +22,20 @@ import sk.posam.fsa.statstracker.domain.service.TeamSuggestionService;
 public class StatsTrackerBeanConfiguration {
 
     @Bean
-    public PlayerFacade playerFacade(PlayerRepository playerRepository) {
-        return new PlayerService(playerRepository);
+    public PlayerFacade playerFacade(PlayerRepository playerRepository,
+            PlayerStatsRepository playerStatsRepository) {
+        return new PlayerService(playerRepository, playerStatsRepository);
     }
 
     @Bean
     public TeamSuggestionFacade teamSuggestionFacade(PlayerRepository playerRepository,
             PlayerStatsRepository playerStatsRepository) {
         return new TeamSuggestionService(playerRepository, playerStatsRepository, new TeamBalancer());
+    }
+
+    @Bean
+    public MatchFacade matchFacade(MatchRepository matchRepository,
+            PlayerStatsRepository playerStatsRepository) {
+        return new MatchService(matchRepository, playerStatsRepository);
     }
 }

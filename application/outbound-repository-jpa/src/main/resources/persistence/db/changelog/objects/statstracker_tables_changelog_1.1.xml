@@ -6,6 +6,41 @@
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
 
-    <!-- Reserved for future table migrations -->
+    <changeSet id="20260520_001a" author="statstracker">
+        <comment>Create match table if not exists</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS match (
+                match_id BIGSERIAL PRIMARY KEY,
+                map VARCHAR(50) NOT NULL,
+                played_at DATE NOT NULL,
+                team1_score INT NOT NULL,
+                team2_score INT NOT NULL
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="20260520_001b" author="statstracker">
+        <comment>Extend player_match_stats with match_id, team, damage columns if not exists</comment>
+        <sql>
+            ALTER TABLE player_match_stats ADD COLUMN IF NOT EXISTS match_id BIGINT;
+            ALTER TABLE player_match_stats ADD COLUMN IF NOT EXISTS team VARCHAR(10);
+            ALTER TABLE player_match_stats ADD COLUMN IF NOT EXISTS damage INT;
+        </sql>
+    </changeSet>
+
+    <changeSet id="20260520_001c" author="statstracker">
+        <comment>Add FK from player_match_stats to match if not exists</comment>
+        <sql splitStatements="false">
+            DO $$ BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM pg_constraint WHERE conname = 'player_match_stats_fk01'
+                ) THEN
+                    ALTER TABLE player_match_stats
+                        ADD CONSTRAINT player_match_stats_fk01
+                        FOREIGN KEY (match_id) REFERENCES match(match_id);
+                END IF;
+            END $$;
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
